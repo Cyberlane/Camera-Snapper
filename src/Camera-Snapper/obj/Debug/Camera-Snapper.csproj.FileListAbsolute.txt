@@ -1,0 +1,2 @@
+C:\Code\Mono-Writer\src\Camera-Snapper\bin\Debug\Camera-Snapper.exe.config
+C:\Code\Camera-Snapper\src\Camera-Snapper\bin\Debug\Camera-Snapper.exe.config
