@@ -1,0 +1,10 @@
+# NuGet Packages Directory
+packages
+
+# Build Folders
+src/**/[Bb]in/
+src/**/[Oo]bj/
+
+# User-specific files
+*.suo
+*.user

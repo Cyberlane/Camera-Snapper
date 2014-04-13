@@ -1,2 +1,11 @@
 C:\Code\Mono-Writer\src\Camera-Snapper\bin\Debug\Camera-Snapper.exe.config
 C:\Code\Camera-Snapper\src\Camera-Snapper\bin\Debug\Camera-Snapper.exe.config
+C:\Code\Camera-Snapper\src\Camera-Snapper\bin\Debug\Camera-Snapper.exe
+C:\Code\Camera-Snapper\src\Camera-Snapper\bin\Debug\Camera-Snapper.pdb
+C:\Code\Camera-Snapper\src\Camera-Snapper\bin\Debug\Newtonsoft.Json.dll
+C:\Code\Camera-Snapper\src\Camera-Snapper\bin\Debug\Newtonsoft.Json.xml
+C:\Code\Camera-Snapper\src\Camera-Snapper\obj\Debug\Camera-Snapper.csprojResolveAssemblyReference.cache
+C:\Code\Camera-Snapper\src\Camera-Snapper\obj\Debug\Camera_Snapper.Properties.Resources.resources
+C:\Code\Camera-Snapper\src\Camera-Snapper\obj\Debug\Camera-Snapper.csproj.GenerateResource.Cache
+C:\Code\Camera-Snapper\src\Camera-Snapper\obj\Debug\Camera-Snapper.exe
+C:\Code\Camera-Snapper\src\Camera-Snapper\obj\Debug\Camera-Snapper.pdb
