@@ -9,3 +9,10 @@ C:\Code\Camera-Snapper\src\Camera-Snapper\obj\Debug\Camera_Snapper.Properties.Re
 C:\Code\Camera-Snapper\src\Camera-Snapper\obj\Debug\Camera-Snapper.csproj.GenerateResource.Cache
 C:\Code\Camera-Snapper\src\Camera-Snapper\obj\Debug\Camera-Snapper.exe
 C:\Code\Camera-Snapper\src\Camera-Snapper\obj\Debug\Camera-Snapper.pdb
+C:\Code\Camera-Snapper\src\Camera-Snapper\bin\Debug\AForge.dll
+C:\Code\Camera-Snapper\src\Camera-Snapper\bin\Debug\AForge.Video.DirectShow.dll
+C:\Code\Camera-Snapper\src\Camera-Snapper\bin\Debug\AForge.Video.dll
+C:\Code\Camera-Snapper\src\Camera-Snapper\bin\Debug\AForge.xml
+C:\Code\Camera-Snapper\src\Camera-Snapper\bin\Debug\AForge.Video.xml
+C:\Code\Camera-Snapper\src\Camera-Snapper\bin\Debug\AForge.Video.DirectShow.xml
+C:\Code\Camera-Snapper\src\Camera-Snapper\obj\Debug\Camera_Snapper.Form1.resources

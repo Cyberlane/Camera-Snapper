@@ -9,5 +9,6 @@ namespace Camera_Snapper
     public class ConfigSettings
     {
         public string SnapshotPath { get; set; }
+        public int SaveFrequency { get; set; }
     }
 }
