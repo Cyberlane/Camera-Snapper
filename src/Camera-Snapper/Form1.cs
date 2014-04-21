@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -54,6 +55,11 @@ namespace Camera_Snapper
                 settings = LoadSettings();
                 _snapshotsPath = settings.SnapshotPath;
                 _saveFrequency = settings.SaveFrequency;
+                if (_saveFrequency == 0)
+                {
+                    settings.SaveFrequency = 60;
+                    _saveFrequency = 60;
+                }
                 if (!Directory.Exists(_snapshotsPath))
                 {
                     Directory.CreateDirectory(_snapshotsPath);
@@ -79,6 +85,8 @@ namespace Camera_Snapper
         {
             txtSavePath.Text = config.SnapshotPath;
             txtSaveFrequency.Text = config.SaveFrequency.ToString();
+            if (config.SaveFrequency == 0) return;
+            timer1.Interval = config.SaveFrequency * 1000;
         }
 
         private void UpdateSettingsFromForm()
@@ -91,20 +99,38 @@ namespace Camera_Snapper
                 SnapshotPath = _snapshotsPath
             };
             UpdateSettings(config);
+            timer1.Interval = config.SaveFrequency * 1000;
         }
 
         private void Stream()
         {
             var devices = new FilterInfoCollection(FilterCategory.VideoInputDevice);
-            if (devices.Count == 0) return;
-            if (devices.Count == 1)
+            var list = devices.Cast<FilterInfo>().ToArray();
+            cmbDeviceList.DisplayMember = "Name";
+            cmbDeviceList.ValueMember = "MonikerString";
+            cmbDeviceList.Items.AddRange(list);
+            if (devices.Count > 0)
             {
-                _captureDevice = new VideoCaptureDevice(devices[0].MonikerString);
+                SetCaptureDevice(devices[0].MonikerString);
+                cmbDeviceList.SelectedIndex = 0;
             }
-            else
+            if (devices.Count == 0)
             {
-                //TODO: Show a list of all cameras
+                cmbDeviceList.Text = "No Devices Found";
             }
+            if (devices.Count > 1)
+            {
+                cmbDeviceList.Enabled = false;
+            }
+        }
+
+        private void SetCaptureDevice(string moniker)
+        {
+            if (_captureDevice != null)
+            {
+                _captureDevice.Stop();
+            }
+            _captureDevice = new VideoCaptureDevice(moniker);
             _captureDevice.NewFrame -= source_NewFrame;
             _captureDevice.NewFrame += source_NewFrame;
             _captureDevice.Start();
@@ -120,22 +146,27 @@ namespace Camera_Snapper
             }
             catch { }
 
-            this.Invoke((MethodInvoker)delegate
+
+            try
             {
-                try
+                this.Invoke((MethodInvoker)delegate
                 {
                     lblLoading.Visible = false;
                     pictureBox1.Image = _currentSnapshot;
-                }
-                catch (ObjectDisposedException) { }
-            });
+                });
+            }
+            catch (ObjectDisposedException) { }
 
             GC.Collect();
 
-            this.Invoke((MethodInvoker)delegate
+            try
             {
-                pictureBox1.Refresh();
-            });
+                this.Invoke((MethodInvoker)delegate
+                {
+                    pictureBox1.Refresh();
+                });
+            }
+            catch (ObjectDisposedException) { }
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -149,7 +180,7 @@ namespace Camera_Snapper
 
         private void btnSettings_Click(object sender, EventArgs e)
         {
-            //TODO: Save form settings to config and local variables
+            UpdateSettingsFromForm();
         }
 
         private void txtSaveFrequency_KeyPress(object sender, KeyPressEventArgs e)
@@ -158,6 +189,41 @@ namespace Camera_Snapper
                 !char.IsDigit(e.KeyChar))
             {
                 e.Handled = true;
+            }
+        }
+
+        private void cmbDeviceList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var info = ((ComboBox)sender).SelectedItem as FilterInfo;
+            SetCaptureDevice(info.MonikerString);
+        }
+
+        private void btnTimerStatus_Click(object sender, EventArgs e)
+        {
+            var btn = (Button)sender;
+            if (btn.Text == "Start")
+            {
+                timer1.Start();
+                btn.Text = "Stop";
+            }
+            else
+            {
+                timer1.Stop();
+                btn.Text = "Start";
+            }
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            if (_currentSnapshot != null)
+            {
+                if (!Directory.Exists(_snapshotsPath))
+                {
+                    Directory.CreateDirectory(_snapshotsPath);
+                }
+                var filename = string.Format("{0:yyyy-MM-dd_HH-mm-ss}.png", DateTime.Now);
+                var savePath = Path.Combine(_snapshotsPath, filename);
+                _currentSnapshot.Save(savePath, ImageFormat.Png);
             }
         }
     }
