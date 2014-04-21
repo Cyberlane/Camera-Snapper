@@ -35,11 +35,13 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.txtSaveFrequency = new System.Windows.Forms.TextBox();
+            this.lblLoading = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox1
             // 
+            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox1.Location = new System.Drawing.Point(306, 25);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(400, 400);
@@ -99,6 +101,17 @@
             this.txtSaveFrequency.Name = "txtSaveFrequency";
             this.txtSaveFrequency.Size = new System.Drawing.Size(288, 23);
             this.txtSaveFrequency.TabIndex = 5;
+            this.txtSaveFrequency.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtSaveFrequency_KeyPress);
+            // 
+            // lblLoading
+            // 
+            this.lblLoading.AutoSize = true;
+            this.lblLoading.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLoading.Location = new System.Drawing.Point(466, 199);
+            this.lblLoading.Name = "lblLoading";
+            this.lblLoading.Size = new System.Drawing.Size(107, 26);
+            this.lblLoading.TabIndex = 7;
+            this.lblLoading.Text = "Loading...";
             // 
             // Form1
             // 
@@ -111,7 +124,10 @@
             this.Controls.Add(this.txtSavePath);
             this.Controls.Add(this.btnSettings);
             this.Controls.Add(this.label1);
+            this.Controls.Add(this.lblLoading);
             this.Controls.Add(this.pictureBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "Camera Snapper";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
@@ -131,6 +147,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtSaveFrequency;
+        private System.Windows.Forms.Label lblLoading;
     }
 }
 

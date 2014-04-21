@@ -60,6 +60,7 @@ namespace Camera_Snapper
                 }
             }
             UpdateSettings(settings);
+            UpdateFormSettings(settings);
         }
 
         private ConfigSettings LoadSettings()
@@ -72,6 +73,24 @@ namespace Camera_Snapper
         {
             var raw = JsonConvert.SerializeObject(config);
             File.WriteAllText(_settingsPath, raw);
+        }
+
+        private void UpdateFormSettings(ConfigSettings config)
+        {
+            txtSavePath.Text = config.SnapshotPath;
+            txtSaveFrequency.Text = config.SaveFrequency.ToString();
+        }
+
+        private void UpdateSettingsFromForm()
+        {
+            _snapshotsPath = txtSavePath.Text;
+            _saveFrequency = int.Parse(txtSaveFrequency.Text);
+            var config = new ConfigSettings
+            {
+                SaveFrequency = _saveFrequency,
+                SnapshotPath = _snapshotsPath
+            };
+            UpdateSettings(config);
         }
 
         private void Stream()
@@ -103,7 +122,12 @@ namespace Camera_Snapper
 
             this.Invoke((MethodInvoker)delegate
             {
-                pictureBox1.Image = _currentSnapshot;
+                try
+                {
+                    lblLoading.Visible = false;
+                    pictureBox1.Image = _currentSnapshot;
+                }
+                catch (ObjectDisposedException) { }
             });
 
             GC.Collect();
@@ -126,6 +150,15 @@ namespace Camera_Snapper
         private void btnSettings_Click(object sender, EventArgs e)
         {
             //TODO: Save form settings to config and local variables
+        }
+
+        private void txtSaveFrequency_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) &&
+                !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+            }
         }
     }
 }
